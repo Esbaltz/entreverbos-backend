@@ -1,5 +1,5 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="es">
 <head>
     <title>{% block titulo %}{% endblock titulo %}</title>
@@ -47,16 +47,22 @@
         style="display:none" id="mySidebar">
         <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Cerrar
             ×</a>
-        <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">Inicio</a>
-        <a href="tienda.html" onclick="w3_close()" class="w3-bar-item w3-button">Tienda</a>
-        <a href="#work" onclick="w3_close()" class="w3-bar-item w3-button">Carrito</a>
-        <a href="#pricing" onclick="w3_close()" class="w3-bar-item w3-button">Iniciar Sesión</a>
-        <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">Usuario</a>
+        <a href="{% url 'index' %}" onclick="w3_close()" class="w3-bar-item w3-button">Inicio</a>
+        <a href="{% url 'tienda' %}" onclick="w3_close()" class="w3-bar-item w3-button">Tienda</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'carrito' %}" onclick="w3_close()" class="w3-bar-item w3-button">Carrito</a>
+        <a href="{% url 'user' %}" onclick="w3_close()" class="w3-bar-item w3-button">Usuario</a>
+        <a href="#" class="w3-bar-item w3-button" onclick="w3_close(); cerrarSesion('/salir/');">Cerrar Sesión</a>
+        {% else %}
+        <a href="{% url 'sesion' %}" onclick="w3_close()" class="w3-bar-item w3-button">Iniciar Sesión</a>
+        {% endif %}
     </nav>
+
+    <!-- Overlay effect when opening sidebar on small screens -->
+    
 
     {% block contenido %}{% endblock contenido %}
 
-    
     {% block scripts %}
     <script src="{% static 'aplicacion/js/menus.js' %}"></script>
     <script src="{% static 'aplicacion/js/messages.js' %}"></script>

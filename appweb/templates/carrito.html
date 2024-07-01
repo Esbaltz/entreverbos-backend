@@ -78,67 +78,76 @@
 {{ block.super }}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('vaciar').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevenir el envío del formulario por defecto
+    document.addEventListener('DOMContentLoaded', function() {
+        var formVaciar = document.getElementById('vaciar');
+        if (formVaciar) {
+            formVaciar.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevenir el envío del formulario por defecto
 
-        // Mostrar alerta con SweetAlert2
-        Swal.fire({
-            title: '¿Seguro que quiere vaciar el carrito?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Vaciar carrito',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Si el usuario confirma, proceder con el envío del formulario
-                this.submit(); // Envía el formulario
-            }
-        });
+                // Mostrar alerta con SweetAlert2
+                Swal.fire({
+                    title: '¿Seguro que quiere vaciar el carrito?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Vaciar carrito',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario confirma, proceder con el envío del formulario
+                        this.submit(); // Envía el formulario
+                    }
+                });
+            });
+        }
     });
-});
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('pagar').addEventListener('submit', function(event) {
-          event.preventDefault(); // Prevenir el envío del formulario por defecto
-  
-          // Mostrar alerta con SweetAlert2
-          Swal.fire({
-              title: '¿Seguro que quiere realizar el pago?',
-              icon: 'question',
-              showCancelButton: true,
-              confirmButtonText: 'Pagar',
-              cancelButtonText: 'Cancelar'
-          }).then((result) => {
-              if (result.isConfirmed) {
-                  // Si el usuario confirma, proceder con el envío del formulario
-                  this.submit(); // Envía el formulario
-              }
-          });
-      });
-  });
+        var formPagar = document.getElementById('pagar');
+        if (formPagar) {
+            formPagar.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevenir el envío del formulario por defecto
+    
+            // Mostrar alerta con SweetAlert2
+                Swal.fire({
+                    title: '¿Seguro que quiere realizar el pago?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Pagar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario confirma, proceder con el envío del formulario
+                        this.submit(); // Envía el formulario
+                    }
+                });
+            });
+        }
+    });
     </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          document.getElementById('elim').addEventListener('submit', function(event) {
-              event.preventDefault(); // Prevenir el envío del formulario por defecto
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var formElim = document.getElementById('elim');
+        if (formElim) {
+            formElim.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevenir el envío del formulario por defecto
       
-              // Mostrar alerta con SweetAlert2
-              Swal.fire({
-                  title: '¿Seguro que quiere eliminar el libro?',
-                  icon: 'question',
-                  showCancelButton: true,
-                  confirmButtonText: 'Eliminar',
-                  cancelButtonText: 'Cancelar'
-              }).then((result) => {
-                  if (result.isConfirmed) {
-                      // Si el usuario confirma, proceder con el envío del formulario
-                      this.submit(); // Envía el formulario
-                  }
-              });
-          });
-      });
-        </script>
+                // Mostrar alerta con SweetAlert2
+                Swal.fire({
+                    title: '¿Seguro que quiere eliminar el libro?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario confirma, proceder con el envío del formulario
+                        this.submit(); // Envía el formulario
+                    }
+                });
+            });
+        }
+    });
+</script>
 {% endblock scripts %}
