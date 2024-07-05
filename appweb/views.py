@@ -5,7 +5,7 @@ import random
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 # Create your views here.
 def index(request):
@@ -56,6 +56,7 @@ def tienda(request):
     }
     return render(request, 'tienda.html', context)
 
+@login_required
 def user(request):
     # Obtener el usuario actual
     usuario_actual = request.user
@@ -70,9 +71,11 @@ def user(request):
         'compras': compras,
         'items_por_compra': items_por_compra,
     })
-    
-    
 
+def permiso(request):
+    return render(request, 'permiso.html')
+    
+@permission_required('appweb.delete_libro')
 def agregar(request):
     exito = False  # Variable para controlar si mostrar el mensaje de éxito
     
@@ -90,6 +93,7 @@ def agregar(request):
     }
     return render(request, 'admin/agregar.html', data)
 
+@permission_required('appweb.delete_libro')
 def listar(request):
     libros = Libro.objects.all()
 
@@ -98,6 +102,7 @@ def listar(request):
     }
     return render(request, 'admin/listar.html', data)
 
+@permission_required('appweb.delete_libro')
 def modificar(request, isbn):
     libro = get_object_or_404(Libro, isbn=isbn)
     exito = False
@@ -118,6 +123,7 @@ def modificar(request, isbn):
     }
     return render(request, 'admin/modificar.html', data)
 
+@permission_required('appweb.delete_libro')
 def eliminar(request, isbn):
     libro = get_object_or_404(Libro, isbn=isbn)
     libro.delete()
