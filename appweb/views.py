@@ -298,6 +298,7 @@ def pagar(request):
 
     return redirect('user')  # Redirige a una página de confirmación de compra
 
+@login_required
 def carrito(request):
     if request.user.is_authenticated:
         carrito, created = Carrito.objects.get_or_create(usuario=request.user)
@@ -396,6 +397,7 @@ def salir(request):
     messages.info(request,'Sesión Cerrada')
     return redirect(to="index")
 
+@login_required
 def pedidos(request):
     if request.method == 'POST':
         item_id = request.POST.get('item_id')
