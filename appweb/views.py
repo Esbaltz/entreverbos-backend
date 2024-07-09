@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import LibroForm, LibroFormMod, LoginForm, ItemForm
+from .forms import LibroForm, LibroFormMod, LoginForm, ItemForm, CustomUserChangeForm 
 from .models import Libro, Carrito, CarritoItem, Compra, CompraItem
 import random
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
@@ -418,3 +419,28 @@ def pedidos(request):
         'form': form,
     })
     
+
+def cuentas(request):
+    usuarios = User.objects.exclude(username='admin')
+
+    if request.method == 'POST':
+        usuario_id = request.POST.get('usuario_id')
+        usuario = User.objects.get(id=usuario_id)
+        usuario.delete()
+        return redirect('cuentas')  # Redirige de vuelta a la misma página después de eliminar
+    
+    return render(request, 'admin/cuentas.html', {'usuarios': usuarios})
+
+def modificar_cuenta(request, usuario_id):
+    usuario = User.objects.get(id=usuario_id)
+    
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, instance=usuario)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Se ha modificado la cuenta de {usuario.username}.')
+            return redirect('cuentas')  # Redirige a la lista de cuentas después de modificar
+    else:
+        form = CustomUserChangeForm(instance=usuario)
+    
+    return render(request, 'admin/modificar_cuenta.html', {'form': form, 'usuario': usuario})

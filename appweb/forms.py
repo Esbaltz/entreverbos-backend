@@ -3,10 +3,24 @@ from django.urls import reverse
 #from .models import Product
 from django import forms
 from .models import Libro, CompraItem
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.models import User
 
 class LoginForm(forms.Form):
     username = forms.CharField(label="Nombre de usuario")
     password = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'is_superuser')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Personalizar etiquetas de campos si es necesario
+        self.fields['username'].label = 'Nombre de usuario'
+        self.fields['password'].help_text = 'Deje este campo en blanco si no desea cambiar la contraseña.'
+        self.fields['is_superuser'].label = 'Es superusuario'
 
 class ItemForm(forms.ModelForm):
     class Meta:
